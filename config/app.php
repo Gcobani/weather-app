@@ -232,4 +232,33 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | NeutrinoApi
+    |--------------------------------------------------------------------------
+    |
+    | Config variables for the neutrino api
+    |
+    */
+
+    'neutrinoapi' => [
+        'apiKey' => env('NEUTRINOAPI_API_KEY', '7luGj92RqrYR6qxeHy5KbHX4JnWchPir8eJTnzNHsDuUMYVO'),
+        'userId' => env('NEUTRINOAPI_USER_ID', 'poswagcobani'),
+        'url' => env('NEUTRINOAPI_URL', 'https://neutrinoapi.net/geocode-address')
+    ],
+
+        /*
+    |--------------------------------------------------------------------------
+    | Open Weather Map API
+    |--------------------------------------------------------------------------
+    |
+    | Config variables for the open weather map api
+    |
+    */
+
+    'openweathermap' => [
+    'apiKey' => env('OPEN_WEATHER_MAP_API_KEY', '4d3cdd60814fc80ba5dc03352851748f'),
+    'url' => env('OPEN_WEATHER_MAP_URL', 'https://api.openweathermap.org/data/2.5/weather')
+    ],
+
 ];

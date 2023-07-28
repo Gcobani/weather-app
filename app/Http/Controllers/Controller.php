@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\API\NeutrinoApiClient;
+use App\Http\API\OpenWeatherMapClient;
 use App\Http\Requests\WeatherRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Arr;
 
 class Controller extends BaseController
 {
@@ -26,6 +29,16 @@ class Controller extends BaseController
      */
     public function postGetWeather(WeatherRequest $request)
     {
-        return view('home');
+        try {
+            $address = app(NeutrinoApiClient::class)->geoCodeAddress();
+            $weather = app(OpenWeatherMapClient::class)->getWeatherByAddress([
+                Arr::get($address, 'locations.0.city'),
+                Arr::get($address,'locations.0.country-code'),
+            ]);
+
+            return view('home', [$weather]);
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
     }
 }
