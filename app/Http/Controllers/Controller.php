@@ -20,7 +20,7 @@ class Controller extends BaseController
      */
     public function index()
     {
-        return view('home');
+        return view('home', ['weather' => null]);
     }
 
     /**
@@ -30,15 +30,16 @@ class Controller extends BaseController
     public function postGetWeather(WeatherRequest $request)
     {
         try {
-            $address = app(NeutrinoApiClient::class)->geoCodeAddress();
+            $address = app(NeutrinoApiClient::class)->geoCodeAddress($request->getAddress());
             $weather = app(OpenWeatherMapClient::class)->getWeatherByAddress([
                 Arr::get($address, 'locations.0.city'),
                 Arr::get($address,'locations.0.country-code'),
             ]);
 
-            return view('home', [$weather]);
+            return view('home', ['weather' => $weather]);
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors($exception->getMessage());
+            dd($exception);
+            return redirect()->back()->withErrors(['address' => 'please enter a valid address']);
         }
     }
 }

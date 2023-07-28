@@ -72,7 +72,7 @@ class NeutrinoApiClient
      * @param string $address
      * @return array
      */
-    public function geoCodeAddress(string $address = '1 Molesworth Street, Pipitea, Wellington 6140, New Zealand'): array
+    public function geoCodeAddress(string $address): array
     {
         return $this->post(['address' => $address]);
     }
